@@ -4,15 +4,22 @@ import { ClientSideSuspense, RoomProvider } from "@liveblocks/react";
 import { Editor } from "@/components/editor/Editor";
 import Header from "@/components/Header";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import ActiveCollaborators from "./ActiveCollaborators";
 
-const CollabrativeRoom = () => {
+const CollaborativeRoom = ({
+  roomId,
+  roomMetadata,
+}: CollaborativeRoomProps) => {
   return (
-    <RoomProvider id="my-room">
+    <RoomProvider id={roomId}>
       <ClientSideSuspense fallback={<div>Loading…</div>}>
         <div className="collaborative-room">
           <Header>
             <div className="flex w-fit items-center justify-center gap-2">
-              <p>Share</p>
+              <p className="document-title">Share</p>
+            </div>
+            <div className="flex w-full flex-1 justify-end gap-2 sm:gap-3">
+              <ActiveCollaborators />
             </div>
             <SignedOut>
               <SignInButton />
@@ -28,4 +35,4 @@ const CollabrativeRoom = () => {
   );
 };
 
-export default CollabrativeRoom;
+export default CollaborativeRoom;
