@@ -3,7 +3,11 @@ import { getDocument } from "@/lib/actions/room.actions";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-const Document = async ({ params: { id } }: SearchParamProps) => {
+const Document = async (props: SearchParamProps) => {
+  const params = await props.params;
+
+  const { id } = params;
+
   const clerkUser = await currentUser();
   if (!clerkUser) redirect("/sign-in");
 
@@ -18,7 +22,7 @@ const Document = async ({ params: { id } }: SearchParamProps) => {
 
   return (
     <main className="flex w-full flex-col items-center">
-      <CollaborativeRoom roomId={id} roomMetadata={room.Metadata} />
+      <CollaborativeRoom roomId={id} roomMetadata={room.metadata} />
     </main>
   );
 };
